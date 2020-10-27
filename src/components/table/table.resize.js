@@ -1,6 +1,6 @@
 import { $ } from '@core/dom'
 
-export function resizeTable(e) {
+export function resizeTable(e, $root) {
   const $resizer = $(e.target)
   const $parent = $resizer.closest('[data-type="resizable"]')
   const coords = $parent.getCoords()
@@ -15,7 +15,6 @@ export function resizeTable(e) {
 
   document.onmousemove = event => {
     if (type === 'col') {
-      console.log(event)
       const delta = event.pageX - coords.right
       value = (coords.width + delta)
       $resizer.css({ right: -delta + 'px' })
@@ -33,7 +32,7 @@ export function resizeTable(e) {
 
     if (type === 'col') {
       $parent.css({width: value + 'px'})
-      this.$root.findAll(`[data-col="${$parent.data.col}"]`)
+      $root.findAll(`[data-col="${$parent.data.col}"]`)
         .forEach(el => el.style.width = value + 'px')  
     } else {
       $parent.css({height: value + 'px'})
